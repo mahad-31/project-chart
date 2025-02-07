@@ -19,7 +19,7 @@ const PersonsList = () => {
 
   return (
     <div>
-      <h2>Persons List</h2>
+      <h2>Persons Liss</h2>
       <ul>
         {persons.map((person, index) => (
           <li key={index}>{person.name} - {person.age} years old</li>

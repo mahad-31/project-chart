@@ -139,7 +139,7 @@ export const SocketProvider = ({ children }) => {
 
      
     });
-
+console.log(data);
     // Reset foot traffic at 00:00 AM
     const resetTrafficAtMidnight = () => {
       const now = new Date();

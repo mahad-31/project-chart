@@ -60,7 +60,7 @@ const LineChart = ({ isLoading }) => {
       <Grid container spacing={2}>
         {/* Age Distribution Chart */}
         <Grid item xs={12}>
-          <Typography variant="h5">Person Information</Typography>
+          <Typography variant="h5">Person Informations</Typography>
           <Chart options={chartOptions} series={series} type="bar" height={350} />
         </Grid>
 
