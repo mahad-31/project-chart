@@ -1,0 +1,228 @@
+{
+	"info": {
+		"_postman_id": "random-uuid",
+		"name": "Juggle Traffic API",
+		"description": "Collection for Person FootFall Traffic Analysis API including REST and WebSocket endpoints",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:8000/api/v1",
+			"type": "string"
+		}
+	],
+	"item": [
+		{
+			"name": "REST API",
+			"item": [
+				{
+					"name": "Create Traffic Entry",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"modelId\": \"model123\",\n    \"cameraId\": \"cam456\",\n    \"category\": \"person\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/traffic",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"traffic"
+							]
+						},
+						"description": "Create a new traffic entry"
+					}
+				},
+				{
+					"name": "Get All Traffic",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/traffic",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"traffic"
+							]
+						},
+						"description": "Get all traffic entries"
+					}
+				},
+				{
+					"name": "Get Traffic by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/traffic/:id",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"traffic",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "traffic_id_here"
+								}
+							]
+						},
+						"description": "Get a specific traffic entry by ID"
+					}
+				},
+				{
+					"name": "Update Traffic",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"modelId\": \"updated_model123\",\n    \"cameraId\": \"updated_cam456\",\n    \"category\": \"vehicle\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/traffic/:id",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"traffic",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "traffic_id_here"
+								}
+							]
+						},
+						"description": "Update a traffic entry"
+					}
+				},
+				{
+					"name": "Delete Traffic",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/traffic/:id",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"traffic",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "traffic_id_here"
+								}
+							]
+						},
+						"description": "Delete a traffic entry"
+					}
+				}
+			],
+			"description": "REST API endpoints for traffic management"
+		},
+		{
+			"name": "WebSocket",
+			"item": [
+				{
+					"name": "Connect to WebSocket",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"// WebSocket connection using socket.io",
+									"const socket = new WebSocket('ws://localhost:8000');",
+									"",
+									"socket.onopen = function() {",
+									"    console.log('Connected to WebSocket server');",
+									"};",
+									"",
+									"socket.onmessage = function(event) {",
+									"    console.log('Message from server:', event.data);",
+									"    // Parse the event data",
+									"    const data = JSON.parse(event.data);",
+									"    ",
+									"    // Handle different event types",
+									"    switch(data.event) {",
+									"        case 'trafficCreated':",
+									"            console.log('New traffic entry:', data.payload);",
+									"            break;",
+									"        case 'trafficUpdated':",
+									"            console.log('Updated traffic entry:', data.payload);",
+									"            break;",
+									"        case 'trafficDeleted':",
+									"            console.log('Deleted traffic entry:', data.payload);",
+									"            break;",
+									"        case 'trafficList':",
+									"            console.log('Traffic list:', data.payload);",
+									"            break;",
+									"        default:",
+									"            console.log('Unknown event:', data);",
+									"    }",
+									"};",
+									"",
+									"socket.onerror = function(error) {",
+									"    console.error('WebSocket error:', error);",
+									"};",
+									"",
+									"socket.onclose = function() {",
+									"    console.log('Disconnected from WebSocket server');",
+									"};"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "ws://localhost:8000",
+							"protocol": "ws",
+							"host": [
+								"localhost"
+							],
+							"port": "8000"
+						},
+						"description": "Connect to WebSocket server and listen for events"
+					}
+				}
+			],
+			"description": "WebSocket connection and event handling examples"
+		}
+	]
+}
